@@ -1,0 +1,12 @@
+gom 'github.com/go-sql-driver/mysql'
+gom 'github.com/jinzhu/gorm'
+gom 'github.com/k0kubun/pp'
+gom 'github.com/BurntSushi/toml'
+gom 'github.com/zenazn/goji'
+
+group :development do
+    gom 'github.com/codegangsta/gin'
+end
+
+group :production do
+end
