@@ -1,6 +1,6 @@
 # IROIRO
 
-This is colorful plog aplication.
+This is colorful IROIRO aplication.
 
 ## Docs
 
