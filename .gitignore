@@ -3,6 +3,8 @@
 *.a
 *.so
 *.swp
+gin-bin
+.DS_Store
 
 # Folders
 _obj
