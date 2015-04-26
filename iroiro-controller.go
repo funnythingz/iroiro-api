@@ -45,6 +45,6 @@ func (_ *IroiroController) iro(c web.C, w http.ResponseWriter, r *http.Request) 
 	io.WriteString(w, string(response))
 }
 
-func (_ *IroiroController) createIro(c web.C, w http.ResponseWriter, r *http.Request) {
+func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Request) {
 	// TODO: createする
 }

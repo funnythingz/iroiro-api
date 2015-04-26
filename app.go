@@ -15,9 +15,9 @@ func main() {
 	//dbLoad()
 
 	// Iroiro
-	goji.Get("/iroiro", iroiroController.iroiro)
-	goji.Get(regexp.MustCompile(`^/iroiro/(?P<id>\d+)$`), iroiroController.iro)
-	goji.Post("/iroiro/create", iroiroController.createIro)
+	goji.Get("/v1/iroiro", iroiroController.iroiro)
+	goji.Post("/v1/iroiro", iroiroController.create)
+	goji.Get(regexp.MustCompile(`^/v1/iroiro/(?P<id>\d+)$`), iroiroController.iro)
 
 	// Exception
 	goji.NotFound(exceptionController.NotFound)
