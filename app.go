@@ -11,8 +11,7 @@ var (
 )
 
 func main() {
-	//TODO: MySQL
-	//dbLoad()
+	dbLoad()
 
 	// Iroiro
 	goji.Get("/v1/iroiro", iroiroController.iroiro)

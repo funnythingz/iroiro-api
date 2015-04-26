@@ -10,11 +10,6 @@ import (
 	"strconv"
 )
 
-var (
-	purple500 = Color{Name: "Purple500", Code: "#9C27B0"}
-	pink500   = Color{Name: "Pink500", Code: "#E91E63"}
-)
-
 type IroiroController struct{}
 
 func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Request) {
