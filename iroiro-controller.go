@@ -5,13 +5,14 @@ import (
 	_ "github.com/k0kubun/pp"
 	"github.com/zenazn/goji/web"
 	"io"
+	"log"
 	"net/http"
 	"strconv"
 )
 
 var (
-	comment = Comment{Value: "hello IROIRO."}
-	color   = Color{Name: "purple", Code: "#C55BFF"}
+	purple500 = Color{Name: "Purple500", Code: "#9C27B0"}
+	pink500   = Color{Name: "Pink500", Code: "#E91E63"}
 )
 
 type IroiroController struct{}
@@ -22,25 +23,29 @@ func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Reques
 		Iroiro: []Iro{
 			Iro{
 				Id:      1,
-				Comment: comment,
-				Color:   color,
+				Content: "Hello world.",
+				Color:   purple500,
 			},
 			Iro{
 				Id:      2,
-				Comment: comment,
-				Color:   color,
+				Content: "Hello good day",
+				Color:   pink500,
 			},
 		},
 	}
 
-	response, _ := json.Marshal(iroiro)
+	response, err := json.Marshal(iroiro)
+	if err != nil {
+		log.Println(w, err)
+	}
+
 	io.WriteString(w, string(response))
 }
 
 func (_ *IroiroController) iro(c web.C, w http.ResponseWriter, r *http.Request) {
 	// dummy
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	iro := Iro{Id: id, Comment: comment, Color: color}
+	iro := Iro{Id: id, Content: "hey!", Color: purple500}
 	response, _ := json.Marshal(iro)
 	io.WriteString(w, string(response))
 }
