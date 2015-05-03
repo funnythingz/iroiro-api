@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"unicode/utf8"
 )
 
 var (
@@ -52,10 +53,25 @@ func (_ *IroiroController) iro(c web.C, w http.ResponseWriter, r *http.Request) 
 }
 
 func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Request) {
-	// TODO: createする
-	iro := domain.Iro{
-		Color:   domain.Color{Name: "Red500", Code: "#F44336"},
-		Content: "Hello world",
+	content := r.FormValue("iro[content]")
+	colorName := r.FormValue("iro[color_name]")
+	colorCode := r.FormValue("iro[color_code]")
+
+	// Validation
+	if utf8.RuneCountInString(content) <= 0 {
+		resultJSON(w, "input Content must be blank.")
+		return
 	}
-	iroRepository.Store(iro)
+	if utf8.RuneCountInString(content) < 5 || utf8.RuneCountInString(content) > 1000 {
+		resultJSON(w, "input Content minimum is 5 and maximum is 1000 character.")
+		return
+	}
+
+	iro := domain.Iro{
+		Color:   domain.Color{Name: colorName, Code: colorCode},
+		Content: content,
+	}
+
+	message := iroRepository.Store(iro)
+	resultJSON(w, message)
 }
