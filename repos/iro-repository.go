@@ -10,7 +10,7 @@ import (
 
 type IroRepository struct{}
 
-func (r *IroRepository) Store(iro domain.Iro) string {
+func (r *IroRepository) Commit(iro domain.Iro) string {
 	iroTable := tables.Iro{
 		ColorName: iro.Color.Name,
 		ColorCode: iro.Color.Code,
@@ -25,7 +25,7 @@ func (r *IroRepository) Store(iro domain.Iro) string {
 	return fmt.Sprintf("Commited ID: %d", iroTable.Id)
 }
 
-func (r *IroRepository) Resolve(id int) domain.Iro {
+func (r *IroRepository) Fetch(id int) domain.Iro {
 	var iroTable = tables.Iro{}
 	db.Dbmap.Where(&tables.Iro{Id: id}).First(&iroTable)
 
@@ -41,4 +41,25 @@ func (r *IroRepository) Resolve(id int) domain.Iro {
 	}
 
 	return iro
+}
+
+func (r *IroRepository) FetchList(permit int) domain.IroIro {
+	var iroTables = []tables.Iro{}
+	db.Dbmap.Order("id desc").Limit(permit).Find(&iroTables)
+
+	iroiro := []domain.Iro{}
+	for _, iroTable := range iroTables {
+		iroiro = append(iroiro, domain.Iro{
+			Id: iroTable.Id,
+			Color: domain.Color{
+				Name: iroTable.ColorName,
+				Code: iroTable.ColorCode,
+			},
+			Content:   iroTable.Content,
+			CreatedAt: iroTable.CreatedAt,
+			UpdatedAt: iroTable.UpdatedAt,
+		})
+	}
+
+	return domain.IroIro{IroIro: iroiro}
 }

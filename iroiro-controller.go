@@ -21,22 +21,7 @@ var (
 type IroiroController struct{}
 
 func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Request) {
-	// dummy
-	iroiro := domain.IroIro{
-		IroIro: []domain.Iro{
-			domain.Iro{
-				Id:      1,
-				Content: "Hello world.",
-				Color:   domain.Purple500,
-			},
-			domain.Iro{
-				Id:      2,
-				Content: "Hello good day",
-				Color:   domain.Pink500,
-			},
-		},
-	}
-
+	iroiro := iroRepository.FetchList(10)
 	response, err := json.Marshal(iroiro)
 	if err != nil {
 		log.Println(w, err)
@@ -47,7 +32,7 @@ func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Reques
 
 func (_ *IroiroController) iro(c web.C, w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	iro := iroRepository.Resolve(id)
+	iro := iroRepository.Fetch(id)
 	if iro.Id == 0 {
 		resultJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
 		return
@@ -81,6 +66,6 @@ func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Reques
 		Content: content,
 	}
 
-	message := iroRepository.Store(iro)
+	message := iroRepository.Commit(iro)
 	resultJSON(w, []string{message})
 }
