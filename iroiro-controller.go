@@ -1,6 +1,7 @@
 package main
 
 import (
+	"./models"
 	"encoding/json"
 	_ "github.com/k0kubun/pp"
 	"github.com/zenazn/goji/web"
@@ -14,17 +15,17 @@ type IroiroController struct{}
 
 func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Request) {
 	// dummy
-	iroiro := Iroiro{
-		Iroiro: []Iro{
-			Iro{
+	iroiro := models.IroIro{
+		IroIro: []models.Iro{
+			models.Iro{
 				Id:      1,
 				Content: "Hello world.",
-				Color:   purple500,
+				Color:   models.Purple500,
 			},
-			Iro{
+			models.Iro{
 				Id:      2,
 				Content: "Hello good day",
-				Color:   pink500,
+				Color:   models.Pink500,
 			},
 		},
 	}
@@ -40,7 +41,7 @@ func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Reques
 func (_ *IroiroController) iro(c web.C, w http.ResponseWriter, r *http.Request) {
 	// dummy
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	iro := Iro{Id: id, Content: "hey!", Color: purple500}
+	iro := models.Iro{Id: id, Content: "hey!", Color: models.Purple500}
 	response, _ := json.Marshal(iro)
 	io.WriteString(w, string(response))
 }

@@ -1,22 +1,21 @@
-package main
+package db
 
 import (
-	"./db"
 	"fmt"
 	"log"
 	"os"
 )
 
-func dbLoad() {
+func DbLoad() {
 	env := "development"
 	if len(os.Args) >= 2 {
 		env = os.Args[1]
 	}
 
 	if env == "production" {
-		db.DbConnect("production")
+		DbConnect("production")
 	} else {
-		db.DbConnect("development")
+		DbConnect("development")
 	}
 
 	log.Println(fmt.Sprintf("mode: %s", env))

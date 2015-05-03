@@ -1,6 +1,7 @@
 package main
 
 import (
+	"./db"
 	"github.com/zenazn/goji"
 	"regexp"
 )
@@ -11,7 +12,7 @@ var (
 )
 
 func main() {
-	dbLoad()
+	db.DbLoad()
 
 	// Iroiro
 	goji.Get("/v1/iroiro", iroiroController.iroiro)
