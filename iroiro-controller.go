@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./models"
+	"./domain"
 	"encoding/json"
 	_ "github.com/k0kubun/pp"
 	"github.com/zenazn/goji/web"
