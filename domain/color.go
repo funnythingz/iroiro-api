@@ -1,4 +1,4 @@
-package models
+package domain
 
 type Color struct {
 	Name string `json:"name"`
