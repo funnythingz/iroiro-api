@@ -1,4 +1,4 @@
-package main
+package models
 
 import (
 	"time"
@@ -14,6 +14,6 @@ type Iro struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-type Iroiro struct {
-	Iroiro []Iro `json:"iroiro"`
+type IroIro struct {
+	IroIro []Iro `json:"iroiro"`
 }
