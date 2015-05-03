@@ -58,12 +58,17 @@ func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Reques
 	colorCode := r.FormValue("iro[color_code]")
 
 	// Validation
+	errors := []string{}
+
 	if utf8.RuneCountInString(content) <= 0 {
-		resultJSON(w, "input Content must be blank.")
-		return
+		errors = append(errors, "input Content must be blank.")
 	}
 	if utf8.RuneCountInString(content) < 5 || utf8.RuneCountInString(content) > 1000 {
-		resultJSON(w, "input Content minimum is 5 and maximum is 1000 character.")
+		errors = append(errors, "input Content minimum is 5 and maximum is 1000 character.")
+	}
+
+	if len(errors) > 0 {
+		resultJSON(w, errors)
 		return
 	}
 
@@ -73,5 +78,5 @@ func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Reques
 	}
 
 	message := iroRepository.Store(iro)
-	resultJSON(w, message)
+	resultJSON(w, []string{message})
 }

@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func resultJSON(w http.ResponseWriter, m string) {
-	response, _ := json.Marshal(map[string]string{"Message": m})
+func resultJSON(w http.ResponseWriter, messages []string) {
+	response, _ := json.Marshal(map[string][]string{"Message": messages})
 	io.WriteString(w, string(response))
 }
