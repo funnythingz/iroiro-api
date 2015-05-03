@@ -45,6 +45,7 @@ func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Reques
 	content := r.FormValue("iro[content]")
 	colorName := r.FormValue("iro[color_name]")
 	colorCode := r.FormValue("iro[color_code]")
+	reIroId, _ := strconv.Atoi(r.FormValue("iro[re_iro_id]"))
 
 	// Validation
 	errors := []string{}
@@ -64,6 +65,7 @@ func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Reques
 	iro := domain.Iro{
 		Color:   domain.Color{Name: colorName, Code: colorCode},
 		Content: content,
+		ReIroId: reIroId,
 	}
 
 	message := iroRepository.Commit(iro)

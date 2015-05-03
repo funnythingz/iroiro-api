@@ -15,6 +15,7 @@ func (r *IroRepository) Commit(iro domain.Iro) string {
 		ColorName: iro.Color.Name,
 		ColorCode: iro.Color.Code,
 		Content:   iro.Content,
+		ReIroId:   iro.ReIroId,
 	}
 
 	db.Dbmap.NewRecord(iroTable)
@@ -35,6 +36,7 @@ func (r *IroRepository) Fetch(id int) domain.Iro {
 			Name: iroTable.ColorName,
 			Code: iroTable.ColorCode,
 		},
+		ReIroId:   iroTable.ReIroId,
 		Content:   iroTable.Content,
 		CreatedAt: iroTable.CreatedAt,
 		UpdatedAt: iroTable.UpdatedAt,
@@ -55,6 +57,7 @@ func (r *IroRepository) FetchList(permit int) domain.IroIro {
 				Name: iroTable.ColorName,
 				Code: iroTable.ColorCode,
 			},
+			ReIroId:   iroTable.ReIroId,
 			Content:   iroTable.Content,
 			CreatedAt: iroTable.CreatedAt,
 			UpdatedAt: iroTable.UpdatedAt,
