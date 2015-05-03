@@ -4,6 +4,7 @@ import (
 	"./domain"
 	"./repos"
 	"encoding/json"
+	"fmt"
 	_ "github.com/k0kubun/pp"
 	"github.com/zenazn/goji/web"
 	"io"
@@ -45,9 +46,12 @@ func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Reques
 }
 
 func (_ *IroiroController) iro(c web.C, w http.ResponseWriter, r *http.Request) {
-	// dummy
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	iro := domain.Iro{Id: id, Content: "hey!", Color: domain.Purple500}
+	iro := iroRepository.Resolve(id)
+	if iro.Id == 0 {
+		resultJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
+		return
+	}
 	response, _ := json.Marshal(iro)
 	io.WriteString(w, string(response))
 }
