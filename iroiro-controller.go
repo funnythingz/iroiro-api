@@ -26,7 +26,7 @@ func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	iroiro := iroRepository.FetchList(10)
+	iroiro := iroRepository.FetchList(20)
 	response, err := json.Marshal(iroiro)
 	if err != nil {
 		log.Println(w, err)

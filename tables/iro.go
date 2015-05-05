@@ -12,4 +12,6 @@ type Iro struct {
 	ReIroId   int
 	CreatedAt time.Time
 	UpdatedAt time.Time
+
+	Iros []Iro
 }
