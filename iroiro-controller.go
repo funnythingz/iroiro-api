@@ -21,6 +21,11 @@ var (
 type IroiroController struct{}
 
 func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Request) {
+
+	if auth.BeforeAuth(w, r) == false {
+		return
+	}
+
 	iroiro := iroRepository.FetchList(10)
 	response, err := json.Marshal(iroiro)
 	if err != nil {
@@ -31,6 +36,11 @@ func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Reques
 }
 
 func (_ *IroiroController) iro(c web.C, w http.ResponseWriter, r *http.Request) {
+
+	if auth.BeforeAuth(w, r) == false {
+		return
+	}
+
 	id, _ := strconv.Atoi(c.URLParams["id"])
 	iro := iroRepository.Fetch(id)
 	if iro.Id == 0 {
@@ -42,6 +52,11 @@ func (_ *IroiroController) iro(c web.C, w http.ResponseWriter, r *http.Request) 
 }
 
 func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Request) {
+
+	if auth.BeforeAuth(w, r) == false {
+		return
+	}
+
 	content := r.FormValue("iro[content]")
 	colorName := r.FormValue("iro[color_name]")
 	colorCode := r.FormValue("iro[color_code]")

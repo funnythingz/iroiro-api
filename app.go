@@ -7,8 +7,10 @@ import (
 )
 
 var (
-	iroiroController    = &IroiroController{}
-	exceptionController = &ExceptionController{}
+	auth                = Auth{}
+	config              = ConfigInit()
+	iroiroController    = IroiroController{}
+	exceptionController = ExceptionController{}
 )
 
 func main() {
