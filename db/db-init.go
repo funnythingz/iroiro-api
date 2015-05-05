@@ -16,6 +16,7 @@ func DbLoad() {
 		DbConnect("production")
 	} else {
 		DbConnect("development")
+		Dbmap.LogMode(true)
 	}
 
 	log.Println(fmt.Sprintf("mode: %s", env))
