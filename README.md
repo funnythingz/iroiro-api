@@ -1,6 +1,32 @@
-# IROIRO
+# IROIRO API
 
 This is colorful IROIRO aplication.
+
+## Usage
+
+access with auth.
+
+```
+access_key: unkounko
+```
+
+### GET IroIro
+
+```
+$ curl -i localhost:8000/v1/iroiro\?access_key=unkounko
+```
+
+### Iro
+
+```
+$ curl -i localhost:8000/v1/iroiro/1\?access_key=unkounko
+```
+
+### Create Iro
+
+```
+$ curl -i -F "iro[content]=auth test" -F "iro[re_iro_id]=2" -F "iro[color_code]=#2196F3" -F "iro[color_name]=Blue500" localhost:8000/v1/iroiro\?access_key=unkounko
+```
 
 ## Docs
 
