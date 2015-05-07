@@ -16,13 +16,13 @@ access_key: unkounko
 $ curl -i localhost:8000/v1/iroiro\?access_key=unkounko
 ```
 
-### Iro
+### GET Iro
 
 ```
 $ curl -i localhost:8000/v1/iroiro/1\?access_key=unkounko
 ```
 
-### Create Iro
+### POST Iro
 
 ```
 $ curl -i -F "iro[content]=auth test" -F "iro[re_iro_id]=2" -F "iro[color_code]=#2196F3" -F "iro[color_name]=Blue500" localhost:8000/v1/iroiro\?access_key=unkounko
