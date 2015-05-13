@@ -1,8 +1,15 @@
 package domain
 
+import (
+	"time"
+)
+
 type Color struct {
-	Name string `json:"name"`
-	Code string `json:"code"`
+	Id        int       `json:"id"`
+	Name      string    `json:"name"`
+	Code      string    `json:"code"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 var (

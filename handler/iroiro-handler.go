@@ -2,22 +2,18 @@ package handler
 
 import (
 	"../domain"
+	"../domain/iro"
 	"../domain/service"
 	"../helper"
-	"../repos"
 	"encoding/json"
 	"fmt"
 	_ "github.com/k0kubun/pp"
 	"github.com/zenazn/goji/web"
 	"io"
-	"log"
 	"net/http"
+	"net/url"
 	"strconv"
 	"unicode/utf8"
-)
-
-var (
-	iroRepository = repos.IroRepository{}
 )
 
 type IroiroHandler struct{}
@@ -28,12 +24,18 @@ func (h *IroiroHandler) Iroiro(c web.C, w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	iroiro := iroRepository.FetchList(20)
-	response, err := json.Marshal(iroiro)
-	if err != nil {
-		log.Println(w, err)
+	permit := 10
+	urlQuery, _ := url.ParseQuery(r.URL.RawQuery)
+
+	var page int
+	if len(urlQuery["page"]) == 0 {
+		page = 1
+	} else {
+		page, _ = strconv.Atoi(urlQuery["page"][0])
 	}
 
+	iroiro := iro.FetchList(permit, page)
+	response, _ := json.Marshal(iroiro)
 	io.WriteString(w, string(response))
 }
 
@@ -44,7 +46,7 @@ func (h *IroiroHandler) Iro(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	iro := iroRepository.Fetch(id)
+	iro := iro.Fetch(id)
 	if iro.Id == 0 {
 		helper.ResultMessageJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
 		return
@@ -60,8 +62,7 @@ func (h *IroiroHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 	}
 
 	content := r.FormValue("iro[content]")
-	colorName := r.FormValue("iro[color_name]")
-	colorCode := r.FormValue("iro[color_code]")
+	colorId, _ := strconv.Atoi(r.FormValue("iro[color_id]"))
 	reIroId, _ := strconv.Atoi(r.FormValue("iro[re_iro_id]"))
 
 	// Validation
@@ -79,12 +80,13 @@ func (h *IroiroHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	iro := domain.Iro{
-		Color:   domain.Color{Name: colorName, Code: colorCode},
+	i := domain.Iro{
+		ColorId: colorId,
 		Content: content,
 		ReIroId: reIroId,
 	}
 
-	message := iroRepository.Commit(iro)
-	helper.ResultMessageJSON(w, []string{message})
+	resultIro := iro.Commit(i)
+	response, _ := json.Marshal(resultIro)
+	io.WriteString(w, string(response))
 }
