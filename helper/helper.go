@@ -1,4 +1,4 @@
-package main
+package helper
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func resultJSON(w http.ResponseWriter, messages []string) {
+func ResultMessageJSON(w http.ResponseWriter, messages []string) {
 	response, _ := json.Marshal(map[string][]string{"Message": messages})
 	io.WriteString(w, string(response))
 }

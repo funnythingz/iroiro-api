@@ -1,8 +1,10 @@
-package main
+package handler
 
 import (
-	"./domain"
-	"./repos"
+	"../domain"
+	"../domain/service"
+	"../helper"
+	"../repos"
 	"encoding/json"
 	"fmt"
 	_ "github.com/k0kubun/pp"
@@ -18,11 +20,11 @@ var (
 	iroRepository = repos.IroRepository{}
 )
 
-type IroiroController struct{}
+type IroiroHandler struct{}
 
-func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Request) {
+func (h *IroiroHandler) Iroiro(c web.C, w http.ResponseWriter, r *http.Request) {
 
-	if auth.BeforeAuth(w, r) == false {
+	if service.BeforeAuth(w, r) == false {
 		return
 	}
 
@@ -35,25 +37,25 @@ func (_ *IroiroController) iroiro(c web.C, w http.ResponseWriter, r *http.Reques
 	io.WriteString(w, string(response))
 }
 
-func (_ *IroiroController) iro(c web.C, w http.ResponseWriter, r *http.Request) {
+func (h *IroiroHandler) Iro(c web.C, w http.ResponseWriter, r *http.Request) {
 
-	if auth.BeforeAuth(w, r) == false {
+	if service.BeforeAuth(w, r) == false {
 		return
 	}
 
 	id, _ := strconv.Atoi(c.URLParams["id"])
 	iro := iroRepository.Fetch(id)
 	if iro.Id == 0 {
-		resultJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
+		helper.ResultMessageJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
 		return
 	}
 	response, _ := json.Marshal(iro)
 	io.WriteString(w, string(response))
 }
 
-func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Request) {
+func (h *IroiroHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) {
 
-	if auth.BeforeAuth(w, r) == false {
+	if service.BeforeAuth(w, r) == false {
 		return
 	}
 
@@ -73,7 +75,7 @@ func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Reques
 	}
 
 	if len(errors) > 0 {
-		resultJSON(w, errors)
+		helper.ResultMessageJSON(w, errors)
 		return
 	}
 
@@ -84,5 +86,5 @@ func (_ *IroiroController) create(c web.C, w http.ResponseWriter, r *http.Reques
 	}
 
 	message := iroRepository.Commit(iro)
-	resultJSON(w, []string{message})
+	helper.ResultMessageJSON(w, []string{message})
 }

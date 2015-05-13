@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	db.DbLoad()
+	db.Connect()
 	migrate()
 }
 

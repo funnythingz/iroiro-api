@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"github.com/BurntSushi/toml"
@@ -13,11 +13,15 @@ type AuthConfig struct {
 	AccessKey string `toml:"access_key"`
 }
 
-func ConfigInit() Config {
+func AppConfig() Config {
 	var config Config
-	if _, err := toml.DecodeFile("config.toml", &config); err != nil {
+	if _, err := toml.DecodeFile("config/config.toml", &config); err != nil {
 		log.Println(err)
 	}
 
 	return config
 }
+
+var (
+	Params = AppConfig()
+)
