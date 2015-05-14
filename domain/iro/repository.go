@@ -16,7 +16,14 @@ func (r *Repository) Commit(iro domain.Iro) domain.Iro {
 
 func (r *Repository) Fetch(id int) domain.Iro {
 	iro := domain.Iro{}
+	color := domain.Color{}
 	db.Dbmap.Where(&domain.Iro{Id: id}).First(&iro)
+	if iro.Id == 0 {
+		return iro
+	}
+	db.Dbmap.Model(&iro).Related(&color)
+	db.Dbmap.Model(&iro).Association("Color").Replace(&color)
+	iro.Color = color
 	return iro
 }
 
