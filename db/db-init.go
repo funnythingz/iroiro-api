@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func DbLoad() {
+func Connect() {
 	env := "development"
 	if len(os.Args) >= 2 {
 		env = os.Args[1]

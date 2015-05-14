@@ -2,28 +2,34 @@ package main
 
 import (
 	"./db"
-	"github.com/zenazn/goji"
+	"./handler"
+	_ "github.com/zenazn/goji"
+	"github.com/zenazn/goji/bind"
+	"github.com/zenazn/goji/graceful"
+	"github.com/zenazn/goji/web"
 	"regexp"
 )
 
 var (
-	auth                = Auth{}
-	config              = ConfigInit()
-	iroiroController    = IroiroController{}
-	exceptionController = ExceptionController{}
+	iroiroHandler    = &handler.IroiroHandler{}
+	exceptionHandler = &handler.ExceptionHandler{}
 )
 
 func main() {
-	db.DbLoad()
+	// Database
+	db.Connect()
+
+	// Goji
+	m := web.New()
 
 	// Iroiro
-	goji.Get("/v1/iroiro", iroiroController.iroiro)
-	goji.Post("/v1/iroiro", iroiroController.create)
-	goji.Get(regexp.MustCompile(`^/v1/iroiro/(?P<id>\d+)$`), iroiroController.iro)
+	m.Get("/v1/iroiro", iroiroHandler.Iroiro)
+	m.Post("/v1/iroiro", iroiroHandler.Create)
+	m.Get(regexp.MustCompile(`^/v1/iroiro/(?P<id>\d+)$`), iroiroHandler.Iro)
 
 	// Exception
-	goji.NotFound(exceptionController.NotFound)
+	m.NotFound(exceptionHandler.NotFound)
 
 	// Serve
-	goji.Serve()
+	graceful.Serve(bind.Default(), m)
 }

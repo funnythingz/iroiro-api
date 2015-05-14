@@ -1,6 +1,7 @@
-package main
+package service
 
 import (
+	"../../config"
 	"net/http"
 	"net/url"
 )
@@ -29,5 +30,15 @@ func (a *Auth) ParseAccessKeyFromRequest(r *http.Request) string {
 }
 
 func (a *Auth) CheckAuth(accessKey string) bool {
-	return accessKey == config.Auth.AccessKey
+	return accessKey == config.Params.Auth.AccessKey
+}
+
+var AuthService = Auth{}
+
+func BeforeAuth(w http.ResponseWriter, r *http.Request) bool {
+	return AuthService.BeforeAuth(w, r)
+}
+
+func ParseAccessKeyFromRequest(r *http.Request) string {
+	return AuthService.ParseAccessKeyFromRequest(r)
 }

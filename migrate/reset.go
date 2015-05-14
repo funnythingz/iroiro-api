@@ -9,25 +9,16 @@ import (
 
 func main() {
 	db.DbLoad()
-	//dropDatabase()
-	//createDatabase()
 	dropTable()
 	createTable()
 }
 
-func dropDatabase() {
-	log.Println(db.Dbmap.Exec("drop database iroiro;"))
-}
-
-func createDatabase() {
-	log.Println(db.Dbmap.Exec("create database iroiro;"))
-}
-
 func dropTable() {
-	log.Println(db.Dbmap.DropTableIfExists(&tables.Iro{}))
-	log.Println(db.Dbmap.DropTableIfExists(&tables.Iro{}))
+	log.Println(db.Dbmap.DropTableIfExists(&domain.Iro{}))
+	log.Println(db.Dbmap.DropTableIfExists(&domain.Color{}))
 }
 
 func createTable() {
-	log.Println(db.Dbmap.CreateTable(&tables.Iro{}))
+	log.Println(db.Dbmap.CreateTable(&domain.Iro{}))
+	log.Println(db.Dbmap.CreateTable(&domain.Color{}))
 }
