@@ -12,6 +12,7 @@ import (
 
 var (
 	iroiroHandler    = &handler.IroiroHandler{}
+	colorsHandler    = &handler.ColorsHandler{}
 	exceptionHandler = &handler.ExceptionHandler{}
 )
 
@@ -26,6 +27,11 @@ func main() {
 	m.Get("/v1/iroiro", iroiroHandler.Iroiro)
 	m.Post("/v1/iroiro", iroiroHandler.Create)
 	m.Get(regexp.MustCompile(`^/v1/iroiro/(?P<id>\d+)$`), iroiroHandler.Iro)
+
+	// Colors
+	m.Get("/v1/colors", colorsHandler.Colors)
+	m.Post("/v1/colors", colorsHandler.Create)
+	m.Get(regexp.MustCompile(`^/v1/colors/(?P<id>\d+)$`), colorsHandler.Color)
 
 	// Exception
 	m.NotFound(exceptionHandler.NotFound)

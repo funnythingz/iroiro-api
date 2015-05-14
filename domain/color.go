@@ -12,6 +12,10 @@ type Color struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+type ColorList struct {
+	ColorList []Color `json:"color_list"`
+}
+
 var (
 	Red500        = Color{Name: "Red500", Code: "#F44336"}
 	Pink500       = Color{Name: "Pink500", Code: "#E91E63"}
