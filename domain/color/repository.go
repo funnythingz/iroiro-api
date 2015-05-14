@@ -16,7 +16,7 @@ func (r *Repository) Commit(color domain.Color) domain.Color {
 
 func (r *Repository) Fetch(id int) domain.Color {
 	color := domain.Color{}
-	db.Dbmap.Where(&domain.Color{Id: id}).First(&color)
+	db.Dbmap.Where([]int{id}).First(&color)
 	return color
 }
 

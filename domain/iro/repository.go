@@ -16,8 +16,8 @@ func (r *Repository) Commit(iro domain.Iro) domain.Iro {
 
 func (r *Repository) Fetch(id int) domain.Iro {
 	iro := domain.Iro{}
-	db.Dbmap.Where(&domain.Iro{Id: id}).First(&iro)
-	if iro.Id == 0 {
+	db.Dbmap.Where([]int{id}).First(&iro)
+	if iro.Entity.Id == 0 {
 		return iro
 	}
 	db.Dbmap.Model(&iro).Related(&iro.Color)

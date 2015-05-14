@@ -1,15 +1,13 @@
 package domain
 
 import (
-	"time"
+	"../ddd"
 )
 
 type Color struct {
-	Id        int       `json:"id"`
-	Name      string    `json:"name"`
-	Code      string    `json:"code"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ddd.Entity
+	Name string `json:"name"`
+	Code string `json:"code"`
 }
 
 type ColorList struct {
