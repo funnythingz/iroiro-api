@@ -16,20 +16,20 @@ func (r *Repository) Commit(iro domain.Iro) domain.Iro {
 
 func (r *Repository) Fetch(id int) domain.Iro {
 	iro := domain.Iro{}
-	color := domain.Color{}
 	db.Dbmap.Where(&domain.Iro{Id: id}).First(&iro)
 	if iro.Id == 0 {
 		return iro
 	}
-	db.Dbmap.Model(&iro).Related(&color)
-	db.Dbmap.Model(&iro).Association("Color").Replace(&color)
-	iro.Color = color
+	db.Dbmap.Model(&iro).Related(&iro.Color)
 	return iro
 }
 
 func (r *Repository) FetchList(permit int, page int) domain.IroIro {
 	iroiro := []domain.Iro{}
 	db.Dbmap.Order("id desc").Offset((page - 1) * permit).Limit(permit).Find(&iroiro).Offset(page * permit).Limit(permit)
+	for i, iro := range iroiro {
+		db.Dbmap.Model(&iro).Related(&iroiro[i].Color)
+	}
 	return domain.IroIro{IroIro: iroiro}
 }
 
