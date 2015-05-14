@@ -77,7 +77,7 @@ func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 	if utf8.RuneCountInString(name) <= 0 {
 		errors = append(errors, "input Name must be blank.")
 	}
-	if nameMatched, _ := regexp.MatchString("^[0-9a-fA-F]*$", name); !nameMatched {
+	if nameMatched, _ := regexp.MatchString("^[0-9a-zA-Z]*$", name); !nameMatched {
 		errors = append(errors, "input Name ex: Red100")
 	}
 

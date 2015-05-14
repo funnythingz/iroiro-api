@@ -11,9 +11,9 @@ import (
 )
 
 var (
+	exceptionHandler = &handler.ExceptionHandler{}
 	iroiroHandler    = &handler.IroiroHandler{}
 	colorsHandler    = &handler.ColorsHandler{}
-	exceptionHandler = &handler.ExceptionHandler{}
 )
 
 func main() {
