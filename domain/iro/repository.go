@@ -1,36 +1,39 @@
 package iro
 
 import (
-	"../../db"
+	"../../ddd"
 	"../../domain"
+	"../../mapper"
 	_ "github.com/k0kubun/pp"
 )
 
 type Repository struct{}
 
 func (r *Repository) Commit(iro domain.Iro) domain.Iro {
-	db.Dbmap.NewRecord(iro)
-	db.Dbmap.Create(&iro)
-	return iro
+	im := mapper.Iro{}
+	im.New(iro)
+	im.Commit()
+	return r.Fetch(im.Id)
 }
 
 func (r *Repository) Fetch(id int) domain.Iro {
-	iro := domain.Iro{}
-	db.Dbmap.Where([]int{id}).First(&iro)
-	if iro.Entity.Id == 0 {
-		return iro
+	im := mapper.Iro{}
+	im.Fetch(id)
+	return domain.Iro{
+		Entity: ddd.Entity{
+			Id: im.EntityMapper.Id,
+		},
+		Color: domain.Color{
+			Entity: ddd.Entity{
+				Id: im.Color.EntityMapper.Id,
+			},
+			Name: im.Color.Name,
+			Code: im.Color.Code,
+		},
+		Content:  im.Content,
+		ReIroId:  im.ReIroId,
+		ReIroIro: im.ReIroIro,
 	}
-	db.Dbmap.Model(&iro).Related(&iro.Color)
-	return iro
-}
-
-func (r *Repository) FetchList(permit int, page int) domain.IroIro {
-	iroiro := []domain.Iro{}
-	db.Dbmap.Order("id desc").Offset((page - 1) * permit).Limit(permit).Find(&iroiro).Offset(page * permit).Limit(permit)
-	for i, iro := range iroiro {
-		db.Dbmap.Model(&iro).Related(&iroiro[i].Color)
-	}
-	return domain.IroIro{IroIro: iroiro}
 }
 
 var (
@@ -43,8 +46,4 @@ func Commit(iro domain.Iro) domain.Iro {
 
 func Fetch(id int) domain.Iro {
 	return repo.Fetch(id)
-}
-
-func FetchList(permit int, page int) domain.IroIro {
-	return repo.FetchList(permit, page)
 }

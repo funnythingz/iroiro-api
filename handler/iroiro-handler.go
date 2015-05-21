@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"../ddd"
 	"../domain"
 	"../domain/iro"
 	"../domain/service"
@@ -11,7 +12,7 @@ import (
 	"github.com/zenazn/goji/web"
 	"io"
 	"net/http"
-	"net/url"
+	_ "net/url"
 	"strconv"
 	"unicode/utf8"
 )
@@ -20,23 +21,23 @@ type IroiroHandler struct{}
 
 func (h *IroiroHandler) Iroiro(c web.C, w http.ResponseWriter, r *http.Request) {
 
-	if service.BeforeAuth(w, r) == false {
-		return
-	}
+	//if service.BeforeAuth(w, r) == false {
+	//	return
+	//}
 
-	permit := 10
-	urlQuery, _ := url.ParseQuery(r.URL.RawQuery)
+	//permit := 10
+	//urlQuery, _ := url.ParseQuery(r.URL.RawQuery)
 
-	var page int
-	if len(urlQuery["page"]) == 0 {
-		page = 1
-	} else {
-		page, _ = strconv.Atoi(urlQuery["page"][0])
-	}
+	//var page int
+	//if len(urlQuery["page"]) == 0 {
+	//	page = 1
+	//} else {
+	//	page, _ = strconv.Atoi(urlQuery["page"][0])
+	//}
 
-	iroiro := iro.FetchList(permit, page)
-	response, _ := json.Marshal(iroiro)
-	io.WriteString(w, string(response))
+	//iroiro := iro.FetchList(permit, page)
+	//response, _ := json.Marshal(iroiro)
+	//io.WriteString(w, string(response))
 }
 
 func (h *IroiroHandler) Iro(c web.C, w http.ResponseWriter, r *http.Request) {
@@ -46,12 +47,12 @@ func (h *IroiroHandler) Iro(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	iro := iro.Fetch(id)
-	if iro.Id == 0 {
+	i := iro.Fetch(id)
+	if i.Id == 0 {
 		helper.ResultMessageJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
 		return
 	}
-	response, _ := json.Marshal(iro)
+	response, _ := json.Marshal(i)
 	io.WriteString(w, string(response))
 }
 
@@ -81,7 +82,11 @@ func (h *IroiroHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 	}
 
 	i := domain.Iro{
-		ColorId: colorId,
+		Color: domain.Color{
+			Entity: ddd.Entity{
+				Id: colorId,
+			},
+		},
 		Content: content,
 		ReIroId: reIroId,
 	}

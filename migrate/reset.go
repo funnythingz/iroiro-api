@@ -2,23 +2,22 @@ package main
 
 import (
 	"../db"
-	"../tables"
-	_ "github.com/k0kubun/pp"
+	"../mapper"
 	"log"
 )
 
 func main() {
-	db.DbLoad()
+	db.Connect()
 	dropTable()
 	createTable()
 }
 
 func dropTable() {
-	log.Println(db.Dbmap.DropTableIfExists(&domain.Iro{}))
-	log.Println(db.Dbmap.DropTableIfExists(&domain.Color{}))
+	log.Println(db.Dbmap.DropTableIfExists(&mapper.Iro{}))
+	log.Println(db.Dbmap.DropTableIfExists(&mapper.Color{}))
 }
 
 func createTable() {
-	log.Println(db.Dbmap.CreateTable(&domain.Iro{}))
-	log.Println(db.Dbmap.CreateTable(&domain.Color{}))
+	log.Println(db.Dbmap.CreateTable(&mapper.Iro{}))
+	log.Println(db.Dbmap.CreateTable(&mapper.Color{}))
 }

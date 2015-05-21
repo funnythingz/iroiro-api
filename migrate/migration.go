@@ -2,7 +2,7 @@ package main
 
 import (
 	"../db"
-	"../domain"
+	"../mapper"
 	"log"
 )
 
@@ -12,6 +12,6 @@ func main() {
 }
 
 func migrate() {
-	log.Println(db.Dbmap.AutoMigrate(&domain.Iro{}))
-	log.Println(db.Dbmap.AutoMigrate(&domain.Color{}))
+	log.Println(db.Dbmap.AutoMigrate(&mapper.Iro{}))
+	log.Println(db.Dbmap.AutoMigrate(&mapper.Color{}))
 }
