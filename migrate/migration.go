@@ -3,7 +3,9 @@ package main
 import (
 	"../db"
 	"../mapper"
+	"fmt"
 	"log"
+	"os"
 )
 
 func main() {
@@ -11,7 +13,7 @@ func main() {
 
 	action := "migrate"
 	if len(os.Args) >= 2 {
-		env = os.Args[1]
+		action = os.Args[1]
 	}
 
 	log.Println(fmt.Sprintf("mode: %s", action))
@@ -38,7 +40,7 @@ func Create() {
 	log.Println(db.Dbmap.CreateTable(&mapper.Color{}))
 }
 
-func migrate() {
+func Migrate() {
 	log.Println(db.Dbmap.AutoMigrate(&mapper.Iro{}))
 	log.Println(db.Dbmap.AutoMigrate(&mapper.Color{}))
 }
