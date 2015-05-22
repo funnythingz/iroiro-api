@@ -1,50 +1,32 @@
 package iro
 
 import (
-	"../../db"
 	"../../domain"
+	"../../mapper"
 	_ "github.com/k0kubun/pp"
 )
 
-type Repository struct{}
+type IroRepository struct{}
 
-func (r *Repository) Commit(iro domain.Iro) domain.Iro {
-	db.Dbmap.NewRecord(iro)
-	db.Dbmap.Create(&iro)
-	return iro
+func (r *IroRepository) Commit(iro domain.Iro) domain.Iro {
+	mi := mapper.Iro{}
+	mi.Map(iro)
+	mi.Commit()
+	return r.Fetch(mi.Id)
 }
 
-func (r *Repository) Fetch(id int) domain.Iro {
-	iro := domain.Iro{}
-	db.Dbmap.Where([]int{id}).First(&iro)
-	if iro.Entity.Id == 0 {
-		return iro
-	}
-	db.Dbmap.Model(&iro).Related(&iro.Color)
-	return iro
+func (r *IroRepository) Fetch(id int) domain.Iro {
+	mi := mapper.Iro{}
+	mi.Fetch(id)
+	return factory.CreateIro(mi)
 }
 
-func (r *Repository) FetchList(permit int, page int) domain.IroIro {
-	iroiro := []domain.Iro{}
-	db.Dbmap.Order("id desc").Offset((page - 1) * permit).Limit(permit).Find(&iroiro).Offset(page * permit).Limit(permit)
-	for i, iro := range iroiro {
-		db.Dbmap.Model(&iro).Related(&iroiro[i].Color)
-	}
-	return domain.IroIro{IroIro: iroiro}
+func (r *IroRepository) FetchList(permit int, page int) domain.IroIro {
+	mii := mapper.IroIro{}
+	mii.Fetch(permit, page)
+	return factory.CreateIroIro(mii)
 }
 
 var (
-	repo = &Repository{}
+	Repository = &IroRepository{}
 )
-
-func Commit(iro domain.Iro) domain.Iro {
-	return repo.Commit(iro)
-}
-
-func Fetch(id int) domain.Iro {
-	return repo.Fetch(id)
-}
-
-func FetchList(permit int, page int) domain.IroIro {
-	return repo.FetchList(permit, page)
-}

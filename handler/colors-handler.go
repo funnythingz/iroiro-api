@@ -35,7 +35,7 @@ func (h *ColorsHandler) Colors(c web.C, w http.ResponseWriter, r *http.Request) 
 		page, _ = strconv.Atoi(urlQuery["page"][0])
 	}
 
-	colors := color.FetchList(permit, page)
+	colors := color.Repository.FetchList(permit, page)
 	response, _ := json.Marshal(colors)
 	io.WriteString(w, string(response))
 }
@@ -47,7 +47,7 @@ func (h *ColorsHandler) Color(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	color := color.Fetch(id)
+	color := color.Repository.Fetch(id)
 	if color.Id == 0 {
 		helper.ResultMessageJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
 		return
@@ -64,6 +64,7 @@ func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 
 	name := r.FormValue("color[name]")
 	code := r.FormValue("color[code]")
+	textCode := r.FormValue("color[text_code]")
 
 	// Validation
 	errors := []string{}
@@ -73,6 +74,12 @@ func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 	}
 	if codeMatched, _ := regexp.MatchString("^#[0-9a-fA-F]{6}$", code); !codeMatched {
 		errors = append(errors, "input Code ex: #1a2b3c")
+	}
+	if utf8.RuneCountInString(textCode) <= 0 {
+		errors = append(errors, "input TextCode must be blank.")
+	}
+	if textCodeMatched, _ := regexp.MatchString("^#[0-9a-fA-F]{6}$", textCode); !textCodeMatched {
+		errors = append(errors, "input TextCode ex: #1a2b3c")
 	}
 	if utf8.RuneCountInString(name) <= 0 {
 		errors = append(errors, "input Name must be blank.")
@@ -87,11 +94,12 @@ func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 	}
 
 	cl := domain.Color{
-		Name: name,
-		Code: code,
+		Name:     name,
+		Code:     code,
+		TextCode: textCode,
 	}
 
-	resultColor := color.Commit(cl)
+	resultColor := color.Repository.Commit(cl)
 	response, _ := json.Marshal(resultColor)
 	io.WriteString(w, string(response))
 }

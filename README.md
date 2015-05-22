@@ -47,7 +47,7 @@ $ curl -i localhost:8000/v1/colors/:id\?access_key=unkounko
 #### POST Color
 
 ```
-$ curl -i -F "color[name]=Blue500" -F "color[code]=#2196F3" -F "color[font]=#FFFFFF" localhost:8000/v1/colors\?access_key=unkounko
+$ curl -i -F "color[name]=Blue500" -F "color[code]=#2196F3" -F "color[text_code]=#FFFFFF" localhost:8000/v1/colors\?access_key=unkounko
 ```
 
 ## Docs

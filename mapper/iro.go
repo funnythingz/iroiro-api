@@ -1,29 +1,43 @@
 package mapper
 
 import (
+	"../db"
 	"../ddd"
+	"../domain"
+	_ "github.com/k0kubun/pp"
 )
 
-type IroMapper struct {
+type Iro struct {
 	ddd.EntityMapper
-	ColorCode string
-	Content   string
-	ReIroIro  []Iro
-	ReIroId   int
+	ColorId  int
+	Color    Color
+	Content  string
+	ReIroId  int
+	ReIroIro []domain.Iro
 }
 
-func (m *IroMapper) New(iro domain.Iro) {
-	m.ColorCode = iro.Color.Code
+func (m *Iro) Map(iro domain.Iro) {
+	m.ColorId = iro.Color.Entity.Id
 	m.Content = iro.Content
-	m.ReIroIro = iro.ReIroIro
 	m.ReIroId = iro.ReIroId
+	m.ReIroIro = iro.ReIroIro
 }
 
-func (m *IroMapper) Commit() {
+func (m *Iro) Commit() {
 	db.Dbmap.NewRecord(m)
 	db.Dbmap.Create(&m)
 }
 
-func (m *IroMapper) Fetch(id int) {
-	db.Dbmap.Find(&m, id).First(&m)
+func (m *Iro) Fetch(id int) {
+	color := Color{}
+	db.Dbmap.Find(&m, id).First(&m).Related(&color)
+	m.Color = color
+}
+
+type IroIro struct {
+	IroIro []Iro
+}
+
+func (m *IroIro) Fetch(permit int, page int) {
+	db.Dbmap.Order("id desc").Offset((page - 1) * permit).Limit(permit).Find(&m.IroIro).Offset(page * permit).Limit(permit)
 }
