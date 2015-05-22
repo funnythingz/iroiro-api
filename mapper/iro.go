@@ -4,7 +4,7 @@ import (
 	"../db"
 	"../ddd"
 	"../domain"
-	"github.com/k0kubun/pp"
+	_ "github.com/k0kubun/pp"
 )
 
 type Iro struct {
@@ -16,7 +16,7 @@ type Iro struct {
 	ReIroIro []domain.Iro
 }
 
-func (m *Iro) New(iro domain.Iro) {
+func (m *Iro) Map(iro domain.Iro) {
 	m.ColorId = iro.Color.Entity.Id
 	m.Content = iro.Content
 	m.ReIroId = iro.ReIroId
@@ -32,5 +32,12 @@ func (m *Iro) Fetch(id int) {
 	color := Color{}
 	db.Dbmap.Find(&m, id).First(&m).Related(&color)
 	m.Color = color
-	pp.Println(m, color)
+}
+
+type IroIro struct {
+	IroIro []Iro
+}
+
+func (m *IroIro) Fetch(permit int, page int) {
+	db.Dbmap.Order("id desc").Offset((page - 1) * permit).Limit(permit).Find(&m.IroIro).Offset(page * permit).Limit(permit)
 }

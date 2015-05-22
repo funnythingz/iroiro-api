@@ -12,7 +12,7 @@ type Color struct {
 	Code string
 }
 
-func (m *Color) New(color domain.Color) {
+func (m *Color) Map(color domain.Color) {
 	m.Name = color.Name
 	m.Code = color.Code
 }
