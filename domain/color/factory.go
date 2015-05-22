@@ -14,8 +14,9 @@ func (f *Factory) CreateColor(mc mapper.Color) domain.Color {
 		Entity: ddd.Entity{
 			Id: mc.EntityMapper.Id,
 		},
-		Name: mc.Name,
-		Code: mc.Code,
+		Name:     mc.Name,
+		Code:     mc.Code,
+		TextCode: mc.TextCode,
 	}
 }
 

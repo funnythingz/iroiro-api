@@ -64,6 +64,7 @@ func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 
 	name := r.FormValue("color[name]")
 	code := r.FormValue("color[code]")
+	textCode := r.FormValue("color[text_code]")
 
 	// Validation
 	errors := []string{}
@@ -73,6 +74,12 @@ func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 	}
 	if codeMatched, _ := regexp.MatchString("^#[0-9a-fA-F]{6}$", code); !codeMatched {
 		errors = append(errors, "input Code ex: #1a2b3c")
+	}
+	if utf8.RuneCountInString(textCode) <= 0 {
+		errors = append(errors, "input TextCode must be blank.")
+	}
+	if textCodeMatched, _ := regexp.MatchString("^#[0-9a-fA-F]{6}$", textCode); !textCodeMatched {
+		errors = append(errors, "input TextCode ex: #1a2b3c")
 	}
 	if utf8.RuneCountInString(name) <= 0 {
 		errors = append(errors, "input Name must be blank.")
@@ -87,8 +94,9 @@ func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 	}
 
 	cl := domain.Color{
-		Name: name,
-		Code: code,
+		Name:     name,
+		Code:     code,
+		TextCode: textCode,
 	}
 
 	resultColor := color.Repository.Commit(cl)

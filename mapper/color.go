@@ -8,13 +8,15 @@ import (
 
 type Color struct {
 	ddd.EntityMapper
-	Name string
-	Code string
+	Name     string
+	Code     string
+	TextCode string
 }
 
 func (m *Color) Map(color domain.Color) {
 	m.Name = color.Name
 	m.Code = color.Code
+	m.TextCode = color.TextCode
 }
 
 func (m *Color) Commit() {
