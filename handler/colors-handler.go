@@ -35,7 +35,7 @@ func (h *ColorsHandler) Colors(c web.C, w http.ResponseWriter, r *http.Request) 
 		page, _ = strconv.Atoi(urlQuery["page"][0])
 	}
 
-	colors := color.FetchList(permit, page)
+	colors := color.Repository.FetchList(permit, page)
 	response, _ := json.Marshal(colors)
 	io.WriteString(w, string(response))
 }
@@ -47,7 +47,7 @@ func (h *ColorsHandler) Color(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	color := color.Fetch(id)
+	color := color.Repository.Fetch(id)
 	if color.Id == 0 {
 		helper.ResultMessageJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
 		return
@@ -91,7 +91,7 @@ func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 		Code: code,
 	}
 
-	resultColor := color.Commit(cl)
+	resultColor := color.Repository.Commit(cl)
 	response, _ := json.Marshal(resultColor)
 	io.WriteString(w, string(response))
 }

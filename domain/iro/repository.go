@@ -6,39 +6,27 @@ import (
 	_ "github.com/k0kubun/pp"
 )
 
-type Repository struct{}
+type IroRepository struct{}
 
-func (r *Repository) Commit(iro domain.Iro) domain.Iro {
-	im := mapper.Iro{}
-	im.Map(iro)
-	im.Commit()
-	return r.Fetch(im.Id)
+func (r *IroRepository) Commit(iro domain.Iro) domain.Iro {
+	mi := mapper.Iro{}
+	mi.Map(iro)
+	mi.Commit()
+	return r.Fetch(mi.Id)
 }
 
-func (r *Repository) Fetch(id int) domain.Iro {
-	im := mapper.Iro{}
-	im.Fetch(id)
-	return factory.CreateIro(im)
+func (r *IroRepository) Fetch(id int) domain.Iro {
+	mi := mapper.Iro{}
+	mi.Fetch(id)
+	return factory.CreateIro(mi)
 }
 
-func (r *Repository) FetchList(permit int, page int) domain.IroIro {
-	iim := mapper.IroIro{}
-	iim.Fetch(permit, page)
-	return factory.CreateIroIro(iim)
+func (r *IroRepository) FetchList(permit int, page int) domain.IroIro {
+	mii := mapper.IroIro{}
+	mii.Fetch(permit, page)
+	return factory.CreateIroIro(mii)
 }
 
 var (
-	repo = &Repository{}
+	Repository = &IroRepository{}
 )
-
-func Commit(iro domain.Iro) domain.Iro {
-	return repo.Commit(iro)
-}
-
-func Fetch(id int) domain.Iro {
-	return repo.Fetch(id)
-}
-
-func FetchList(permit int, page int) domain.IroIro {
-	return repo.FetchList(permit, page)
-}

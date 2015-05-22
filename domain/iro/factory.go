@@ -9,28 +9,28 @@ import (
 
 type Factory struct{}
 
-func (f *Factory) CreateIro(im mapper.Iro) domain.Iro {
+func (f *Factory) CreateIro(mi mapper.Iro) domain.Iro {
 	return domain.Iro{
 		Entity: ddd.Entity{
-			Id: im.EntityMapper.Id,
+			Id: mi.EntityMapper.Id,
 		},
 		Color: domain.Color{
 			Entity: ddd.Entity{
-				Id: im.Color.EntityMapper.Id,
+				Id: mi.Color.EntityMapper.Id,
 			},
-			Name: im.Color.Name,
-			Code: im.Color.Code,
+			Name: mi.Color.Name,
+			Code: mi.Color.Code,
 		},
-		Content:  im.Content,
-		ReIroId:  im.ReIroId,
-		ReIroIro: im.ReIroIro,
+		Content:  mi.Content,
+		ReIroId:  mi.ReIroId,
+		ReIroIro: mi.ReIroIro,
 	}
 }
 
-func (f *Factory) CreateIroIro(iim mapper.IroIro) domain.IroIro {
+func (f *Factory) CreateIroIro(mii mapper.IroIro) domain.IroIro {
 	iroiro := []domain.Iro{}
-	for _, im := range iim.IroIro {
-		iroiro = append(iroiro, f.CreateIro(im))
+	for _, mi := range mii.IroIro {
+		iroiro = append(iroiro, f.CreateIro(mi))
 	}
 	return domain.IroIro{IroIro: iroiro}
 }

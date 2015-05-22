@@ -25,3 +25,11 @@ func (m *Color) Commit() {
 func (m *Color) Fetch(id int) {
 	db.Dbmap.Find(&m, id).First(&m)
 }
+
+type ColorList struct {
+	ColorList []Color
+}
+
+func (m *ColorList) Fetch(permit int, page int) {
+	db.Dbmap.Order("id desc").Offset((page - 1) * permit).Limit(permit).Find(&m.ColorList).Offset(page * permit).Limit(permit)
+}
