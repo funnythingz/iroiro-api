@@ -1,7 +1,7 @@
 [Connection]
 adapter  = "mysql"
 encoding = "utf8"
-host = "localhost"
+host     = "localhost"
 username = "root"
 password = "root"
 
@@ -14,3 +14,6 @@ password = "root"
 
   [Databases.production]
   database = "iroiro"
+  host     = "173.194.86.81"
+  username = "iroiro"
+  password = "7ac2151142599989f18f1c00e06443a24cb39603"

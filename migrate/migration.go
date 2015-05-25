@@ -13,7 +13,7 @@ func main() {
 
 	action := "migrate"
 	if len(os.Args) >= 2 {
-		action = os.Args[1]
+		action = os.Args[2]
 	}
 
 	log.Println(fmt.Sprintf("mode: %s", action))
