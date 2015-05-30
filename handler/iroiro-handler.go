@@ -35,7 +35,7 @@ func (h *IroiroHandler) Iroiro(c web.C, w http.ResponseWriter, r *http.Request) 
 		page, _ = strconv.Atoi(urlQuery["page"][0])
 	}
 
-	iroiro := iro.Repository.FetchList(permit, page)
+	iroiro := iro.Repository.ResolveList(permit, page)
 	response, _ := json.Marshal(iroiro)
 	io.WriteString(w, string(response))
 }
@@ -47,7 +47,7 @@ func (h *IroiroHandler) Iro(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	i := iro.Repository.Fetch(id)
+	i := iro.Repository.Resolve(id)
 	if i.Id == 0 {
 		helper.ResultMessageJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
 		return
@@ -91,7 +91,7 @@ func (h *IroiroHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 		ReIroId: reIroId,
 	}
 
-	resultIro := iro.Repository.Commit(i)
+	resultIro := iro.Repository.Store(i)
 	response, _ := json.Marshal(resultIro)
 	io.WriteString(w, string(response))
 }

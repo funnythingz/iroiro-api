@@ -8,25 +8,25 @@ import (
 
 type IroRepository struct{}
 
-func (r *IroRepository) Commit(iro domain.Iro) domain.Iro {
+func (r *IroRepository) Store(iro domain.Iro) domain.Iro {
 	mi := mapper.Iro{}
 	mi.Map(iro)
 	mi.Commit()
-	return r.Fetch(mi.Id)
+	return r.Resolve(mi.Id)
 }
 
-func (r *IroRepository) Fetch(id int) domain.Iro {
+func (r *IroRepository) Resolve(id int) domain.Iro {
 	mi := mapper.Iro{}
 	mi.Fetch(id)
 	return factory.CreateIro(mi)
 }
 
-func (r *IroRepository) FetchList(permit int, page int) domain.IroIro {
+func (r *IroRepository) ResolveList(permit int, page int) domain.IroIro {
 	mii := mapper.IroIro{}
 	mii.Fetch(permit, page)
 	return factory.CreateIroIro(mii)
 }
 
 var (
-	Repository = &IroRepository{}
+	Repository = IroRepository{}
 )

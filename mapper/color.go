@@ -4,6 +4,7 @@ import (
 	"../db"
 	"../ddd"
 	"../domain"
+	_ "github.com/k0kubun/pp"
 )
 
 type Color struct {

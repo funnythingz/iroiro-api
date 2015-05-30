@@ -29,9 +29,8 @@ func (m *Iro) Commit() {
 }
 
 func (m *Iro) Fetch(id int) {
-	color := Color{}
-	db.Dbmap.Find(&m, id).First(&m).Related(&color)
-	m.Color = color
+	db.Dbmap.Find(&m, id).First(&m)
+	m.Color.Fetch(m.ColorId)
 }
 
 type IroIro struct {
@@ -40,4 +39,7 @@ type IroIro struct {
 
 func (m *IroIro) Fetch(permit int, page int) {
 	db.Dbmap.Order("id desc").Offset((page - 1) * permit).Limit(permit).Find(&m.IroIro).Offset(page * permit).Limit(permit)
+	for i, iro := range m.IroIro {
+		m.IroIro[i].Fetch(iro.Id)
+	}
 }

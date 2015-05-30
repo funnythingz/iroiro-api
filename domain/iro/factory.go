@@ -18,8 +18,9 @@ func (f *Factory) CreateIro(mi mapper.Iro) domain.Iro {
 			Entity: ddd.Entity{
 				Id: mi.Color.EntityMapper.Id,
 			},
-			Name: mi.Color.Name,
-			Code: mi.Color.Code,
+			Name:     mi.Color.Name,
+			Code:     mi.Color.Code,
+			TextCode: mi.Color.TextCode,
 		},
 		Content:  mi.Content,
 		ReIroId:  mi.ReIroId,
