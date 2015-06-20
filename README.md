@@ -15,19 +15,19 @@ access_key: unkounko
 #### GET IroIro
 
 ```
-$ curl -i iroiro.space/v1/iroiro\?access_key=unkounko
+$ curl -i iroiro.space/v1/iroiro
 ```
 
 #### GET Iro
 
 ```
-$ curl -i iroiro.space/v1/iroiro/:id\?access_key=unkounko
+$ curl -i iroiro.space/v1/iroiro/:id
 ```
 
 #### POST Iro
 
 ```
-$ curl -i -F "iro[content]=auth test" -F "iro[re_iro_id]=2" -F "iro[color_id]=1" iroiro.space/v1/iroiro\?access_key=unkounko
+$ curl -i -F "iro[content]=auth test" -F "iro[re_iro_id]=2" -F "iro[color_id]=1" iroiro.space/v1/iroiro
 ```
 
 ### Color
@@ -35,22 +35,17 @@ $ curl -i -F "iro[content]=auth test" -F "iro[re_iro_id]=2" -F "iro[color_id]=1"
 #### GET ColorList
 
 ```
-$ curl -i iroiro.space/v1/colors\?access_key=unkounko
+$ curl -i iroiro.space/v1/colors
 ```
 
 #### GET Color
 
 ```
-$ curl -i iroiro.space/v1/colors/:id\?access_key=unkounko
+$ curl -i iroiro.space/v1/colors/:id
 ```
 
 #### POST Color
 
 ```
-$ curl -i -F "color[name]=Blue500" -F "color[code]=#2196F3" -F "color[text_code]=#FFFFFF" iroiro.space/v1/colors\?access_key=unkounko
+$ curl -i -F "color[name]=Blue500" -F "color[code]=#2196F3" -F "color[text_code]=#FFFFFF" iroiro.space/v1/colors
 ```
-
-## Docs
-
-- [Statement](https://github.com/funnythingz/IROIRO/wiki/Statement)
-- [WBS](https://docs.google.com/a/nanapi.co.jp/spreadsheets/d/111eu2YoP1SF7jQuImFCmIVaM2p6fd0DPh40tLoDyaZc/edit#gid=0)
