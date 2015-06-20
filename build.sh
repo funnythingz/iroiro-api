@@ -1,18 +1,22 @@
 #!/bin/sh
 
 # iroiro-api
-app=iroiro
-repo=tutum.co/funnythingz/$app-api
+APP=iroiro
+REPO=tutum.co/funnythingz/$APP-api
 
-GOOS=linux gom build -o $app
-tar cvfz $app.tar.gz ./$app ./db/database.toml
-cat $app.tar.gz | docker import - $repo
-docker push $repo
-rm ./$app ./$app.tar.gz
+GOOS=linux gom build -o $APP
+tar cvfz $APP.tar.gz ./$APP ./db/database.toml ./config/config.toml
+cat $APP.tar.gz | docker import - $REPO
+docker push $REPO
+rm ./$APP ./$APP.tar.gz
 echo done
 
 # migration
-GOOS=linux gom build migrate/migration.go
-tar cvfz migration.tar.gz ./migration ./db/database.toml
-rm ./migration ./migration.tar.gz
+APP=iroiro-api-migration
+REPO=tutum.co/funnythingz/$APP
+GOOS=linux gom build -o $APP migrate/migration.go
+tar cvfz $APP.tar.gz ./$APP ./db/database.toml
+cat $APP.tar.gz | docker import - $REPO
+docker push $REPO
+rm ./$APP ./$APP.tar.gz
 echo migration done
