@@ -1,6 +1,12 @@
 #!/bin/sh
 
-docker pull tutum.co/funnythingz/iroiro
+# API
+APP=iroiro-api
+docker rm -f $APP
+docker pull tutum.co/funnythingz/$APP
+docker run -dit --name iroiro -p 80:8000 tutum.co/funnythingz/$APP /iroiro production
+
+# migration
+docker rm -f iroiro-migration
 docker pull tutum.co/funnythingz/iroiro-migration
-docker run -dit -name iroiro-migration tutum.co/funnythingz/iroiro-migration /migration production migrate
-docker run -dit -name iroiro -p 80:8000 tutum.co/funnythingz/iroiro /iroiro production
+docker run -dit --name iroiro-migration tutum.co/funnythingz/iroiro-migration /migration production migrate
