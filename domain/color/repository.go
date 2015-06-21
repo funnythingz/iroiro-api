@@ -21,7 +21,7 @@ func (r *ColorRepository) Fetch(id int) domain.Color {
 	return factory.CreateColor(mc)
 }
 
-func (r *ColorRepository) FetchList(permit int, page int) domain.ColorList {
+func (r *ColorRepository) FetchList(permit int, page int) []domain.Color {
 	mcl := mapper.ColorList{}
 	mcl.Fetch(permit, page)
 	return factory.CreateColorList(mcl)

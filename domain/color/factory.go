@@ -20,12 +20,12 @@ func (f *Factory) CreateColor(mc mapper.Color) domain.Color {
 	}
 }
 
-func (f *Factory) CreateColorList(mcl mapper.ColorList) domain.ColorList {
+func (f *Factory) CreateColorList(mcl mapper.ColorList) []domain.Color {
 	colorList := []domain.Color{}
 	for _, mc := range mcl.ColorList {
 		colorList = append(colorList, f.CreateColor(mc))
 	}
-	return domain.ColorList{ColorList: colorList}
+	return colorList
 }
 
 var (
