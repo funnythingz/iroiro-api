@@ -15,6 +15,6 @@ password = "root"
 
   [Databases.production]
   database = "iroiro"
-  host     = "173.194.243.183"
+  host     = "173.194.243.81"
   username = "iroiro"
   password = "7ac2151142599989f18f1c00e06443a24cb39603"
