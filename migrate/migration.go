@@ -30,17 +30,17 @@ func main() {
 }
 
 func Reset() {
-	log.Println(db.Dbmap.DropTableIfExists(&mapper.Iro{}))
-	log.Println(db.Dbmap.DropTableIfExists(&mapper.Color{}))
+	db.Dbmap.DropTableIfExists(&mapper.Iro{})
+	db.Dbmap.DropTableIfExists(&mapper.Color{})
 	Create()
 }
 
 func Create() {
-	log.Println(db.Dbmap.CreateTable(&mapper.Iro{}))
-	log.Println(db.Dbmap.CreateTable(&mapper.Color{}))
+	db.Dbmap.CreateTable(&mapper.Iro{})
+	db.Dbmap.CreateTable(&mapper.Color{})
 }
 
 func Migrate() {
-	log.Println(db.Dbmap.AutoMigrate(&mapper.Iro{}))
-	log.Println(db.Dbmap.AutoMigrate(&mapper.Color{}))
+	db.Dbmap.AutoMigrate(&mapper.Iro{})
+	db.Dbmap.AutoMigrate(&mapper.Color{})
 }

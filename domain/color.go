@@ -10,7 +10,3 @@ type Color struct {
 	Code     string `json:"code"`
 	TextCode string `json:"text_code"`
 }
-
-type ColorList struct {
-	ColorList []Color `json:"color_list"`
-}

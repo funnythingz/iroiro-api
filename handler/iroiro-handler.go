@@ -25,7 +25,7 @@ func (h *IroiroHandler) Iroiro(c web.C, w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	permit := 10
+	permit := 50
 	urlQuery, _ := url.ParseQuery(r.URL.RawQuery)
 
 	var page int

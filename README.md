@@ -50,7 +50,4 @@ $ curl -i iroiro.space/v1/colors/:id\?access_key=unkounko
 $ curl -i -F "color[name]=Blue500" -F "color[code]=#2196F3" -F "color[text_code]=#FFFFFF" iroiro.space/v1/colors\?access_key=unkounko
 ```
 
-## Docs
-
-- [Statement](https://github.com/funnythingz/IROIRO/wiki/Statement)
-- [WBS](https://docs.google.com/a/nanapi.co.jp/spreadsheets/d/111eu2YoP1SF7jQuImFCmIVaM2p6fd0DPh40tLoDyaZc/edit#gid=0)
+&copy; funnythingz

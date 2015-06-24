@@ -21,7 +21,7 @@ func (r *IroRepository) Resolve(id int) domain.Iro {
 	return factory.CreateIro(mi)
 }
 
-func (r *IroRepository) ResolveList(permit int, page int) domain.IroIro {
+func (r *IroRepository) ResolveList(permit int, page int) []domain.Iro {
 	mii := mapper.IroIro{}
 	mii.Fetch(permit, page)
 	return factory.CreateIroIro(mii)

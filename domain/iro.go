@@ -11,7 +11,3 @@ type Iro struct {
 	ReIroId  int    `json:"re_iro_id"`
 	ReIroIro []Iro  `json:"re_iroiro"`
 }
-
-type IroIro struct {
-	IroIro []Iro `json:"iroiro"`
-}

@@ -4,6 +4,7 @@ encoding = "utf8"
 host     = "localhost"
 username = "username"
 password = "password"
+port     = "3306"
 
 [Databases]
   [Databases.development]

@@ -13,12 +13,13 @@ var Dbmap gorm.DB
 func DbOpen(
 	adapter string,
 	host string,
+	port string,
 	username string,
 	password string,
 	database string,
 	encoding string,
 ) {
-	dataSourceName := username + ":" + password + "@tcp(" + host + ":3306)/" + database + "?charset=" + encoding + "&parseTime=True"
+	dataSourceName := username + ":" + password + "@tcp(" + host + ":" + port + ")/" + database + "?charset=" + encoding + "&parseTime=True"
 	Dbmap, _ = gorm.Open(adapter, dataSourceName)
 
 	Dbmap.DB()
@@ -32,6 +33,7 @@ func DbOpen(
 
 type env struct {
 	Host     string
+	Port     string
 	Username string
 	Password string
 	Database string
@@ -41,6 +43,7 @@ type connection struct {
 	Adapter  string
 	Encoding string
 	Host     string
+	Port     string
 	Username string
 	Password string
 	Database string
@@ -72,6 +75,13 @@ func DbConnect(env string) {
 			return config.Connection.Host
 		}()
 
+		port = func() string {
+			if dbEnv.Port != "" {
+				return dbEnv.Port
+			}
+			return config.Connection.Port
+		}()
+
 		username = func() string {
 			if dbEnv.Username != "" {
 				return dbEnv.Username
@@ -97,6 +107,7 @@ func DbConnect(env string) {
 	DbOpen(
 		config.Connection.Adapter,
 		host,
+		port,
 		username,
 		password,
 		database,

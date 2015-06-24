@@ -17,6 +17,7 @@ func Connect() {
 	switch {
 	case env == "production":
 		DbConnect("production")
+		Dbmap.LogMode(true)
 		return
 	default:
 		DbConnect("development")

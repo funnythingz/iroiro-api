@@ -28,12 +28,12 @@ func (f *Factory) CreateIro(mi mapper.Iro) domain.Iro {
 	}
 }
 
-func (f *Factory) CreateIroIro(mii mapper.IroIro) domain.IroIro {
+func (f *Factory) CreateIroIro(mii mapper.IroIro) []domain.Iro {
 	iroiro := []domain.Iro{}
 	for _, mi := range mii.IroIro {
 		iroiro = append(iroiro, f.CreateIro(mi))
 	}
-	return domain.IroIro{IroIro: iroiro}
+	return iroiro
 }
 
 var (
