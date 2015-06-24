@@ -26,3 +26,6 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+config/config.toml
+db/database.toml
