@@ -2,8 +2,8 @@
 adapter  = "mysql"
 encoding = "utf8"
 host     = "localhost"
-username = "root"
-password = "root"
+username = "username"
+password = "password"
 
 [Databases]
   [Databases.development]
@@ -14,6 +14,6 @@ password = "root"
 
   [Databases.production]
   database = "iroiro"
-  host     = "173.194.86.81"
-  username = "iroiro"
-  password = "7ac2151142599989f18f1c00e06443a24cb39603"
+  host     = "0.0.0.0"
+  username = "username"
+  password = "password"
