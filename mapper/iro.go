@@ -16,7 +16,7 @@ type Iro struct {
 	ReIroIro []domain.Iro
 }
 
-func (m *Iro) Map(iro domain.Iro) {
+func (m *Iro) Map(iro *domain.Iro) {
 	m.ColorId = iro.Color.Entity.Id
 	m.Content = iro.Content
 	m.ReIroId = iro.ReIroId

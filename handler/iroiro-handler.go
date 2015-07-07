@@ -81,7 +81,7 @@ func (h *IroiroHandler) CreateIro(c web.C, w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	i := domain.Iro{
+	iro := domain.Iro{
 		Color: domain.Color{
 			Entity: ddd.Entity{
 				Id: colorId,
@@ -91,8 +91,8 @@ func (h *IroiroHandler) CreateIro(c web.C, w http.ResponseWriter, r *http.Reques
 		ReIroId: reIroId,
 	}
 
-	resultIro := repositories.IroRepo.Store(i)
-	response, _ := json.Marshal(resultIro)
+	repositories.IroRepo.Store(&iro)
+	response, _ := json.Marshal(iro)
 	io.WriteString(w, string(response))
 }
 
@@ -103,7 +103,8 @@ func (h *IroiroHandler) UpdateIro(c web.C, w http.ResponseWriter, r *http.Reques
 	}
 
 	content := r.FormValue("iro[content]")
-	colorId, _ := strconv.Atoi(r.FormValue("iro[color_id]"))
+	//TODO
+	//colorId, _ := strconv.Atoi(r.FormValue("iro[color_id]"))
 	reIroId, _ := strconv.Atoi(r.FormValue("iro[re_iro_id]"))
 
 	// Validation
@@ -121,18 +122,19 @@ func (h *IroiroHandler) UpdateIro(c web.C, w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	// TODO
-	i := domain.Iro{
-		Color: domain.Color{
-			Entity: ddd.Entity{
-				Id: colorId,
-			},
-		},
-		Content: content,
-		ReIroId: reIroId,
+	// Fetch
+	id, _ := strconv.Atoi(c.URLParams["id"])
+	iro := repositories.IroRepo.Resolve(id)
+
+	if iro.Id == 0 {
+		helper.ResultMessageJSON(w, []string{fmt.Sprintf("Not Found: %s", c.URLParams["id"])})
+		return
 	}
 
-	resultIro := repositories.IroRepo.Store(i)
-	response, _ := json.Marshal(resultIro)
+	//TODO
+	iro.ReIroId = reIroId
+
+	repositories.IroRepo.Update(&iro)
+	response, _ := json.Marshal(iro)
 	io.WriteString(w, string(response))
 }

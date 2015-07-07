@@ -9,11 +9,15 @@ import (
 
 type IroRepository struct{}
 
-func (r *IroRepository) Store(iro domain.Iro) domain.Iro {
+func (r *IroRepository) Store(iro *domain.Iro) {
 	mi := mapper.Iro{}
 	mi.Map(iro)
 	mi.Commit()
-	return r.Resolve(mi.Id)
+	iro.Id = mi.Id
+}
+
+func (r *IroRepository) Update(iro *domain.Iro) {
+	//TODO
 }
 
 func (r *IroRepository) Resolve(id int) domain.Iro {
