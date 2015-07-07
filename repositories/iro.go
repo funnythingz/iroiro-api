@@ -17,7 +17,10 @@ func (r *IroRepository) Store(iro *domain.Iro) {
 }
 
 func (r *IroRepository) Update(iro *domain.Iro) {
-	//TODO
+	mi := mapper.Iro{}
+	mi.Fetch(iro.Id)
+	mi.Map(iro)
+	mi.Update()
 }
 
 func (r *IroRepository) Resolve(id int) domain.Iro {

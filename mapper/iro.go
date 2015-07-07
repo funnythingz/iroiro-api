@@ -28,6 +28,10 @@ func (m *Iro) Commit() {
 	db.Dbmap.Create(&m)
 }
 
+func (m *Iro) Update() {
+	db.Dbmap.Model(&Iro{}).Update(m)
+}
+
 func (m *Iro) Fetch(id int) {
 	db.Dbmap.Find(&m, id).First(&m)
 	m.Color.Fetch(m.ColorId)

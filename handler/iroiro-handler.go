@@ -131,8 +131,8 @@ func (h *IroiroHandler) UpdateIro(c web.C, w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	//TODO
 	iro.ReIroId = reIroId
+	iro.Content = content
 
 	repositories.IroRepo.Update(&iro)
 	response, _ := json.Marshal(iro)
