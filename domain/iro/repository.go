@@ -1,8 +1,8 @@
 package iro
 
 import (
-	"../../domain"
-	"../../mapper"
+	"github.com/funnythingz/iroiro-api/domain"
+	"github.com/funnythingz/iroiro-api/mapper"
 	_ "github.com/k0kubun/pp"
 )
 

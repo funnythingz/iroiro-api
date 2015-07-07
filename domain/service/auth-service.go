@@ -1,7 +1,7 @@
 package service
 
 import (
-	"../../config"
+	"github.com/funnythingz/iroiro-api/config"
 	"net/http"
 	"net/url"
 )

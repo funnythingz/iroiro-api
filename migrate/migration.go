@@ -1,9 +1,9 @@
 package main
 
 import (
-	"../db"
-	"../mapper"
 	"fmt"
+	"github.com/funnythingz/iroiro-api/db"
+	"github.com/funnythingz/iroiro-api/mapper"
 	"log"
 	"os"
 )

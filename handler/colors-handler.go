@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"../domain"
-	"../domain/color"
-	"../domain/service"
-	"../helper"
 	"encoding/json"
 	"fmt"
+	"github.com/funnythingz/iroiro-api/domain"
+	"github.com/funnythingz/iroiro-api/domain/color"
+	"github.com/funnythingz/iroiro-api/domain/service"
+	"github.com/funnythingz/iroiro-api/helper"
 	_ "github.com/k0kubun/pp"
 	"github.com/zenazn/goji/web"
 	"io"

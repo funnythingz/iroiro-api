@@ -1,9 +1,9 @@
 package color
 
 import (
-	"../../ddd"
-	"../../domain"
-	"../../mapper"
+	"github.com/funnythingz/iroiro-api/ddd"
+	"github.com/funnythingz/iroiro-api/domain"
+	"github.com/funnythingz/iroiro-api/mapper"
 	_ "github.com/k0kubun/pp"
 )
 

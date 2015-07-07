@@ -1,9 +1,9 @@
 package mapper
 
 import (
-	"../db"
-	"../ddd"
-	"../domain"
+	"github.com/funnythingz/iroiro-api/db"
+	"github.com/funnythingz/iroiro-api/ddd"
+	"github.com/funnythingz/iroiro-api/domain"
 	_ "github.com/k0kubun/pp"
 )
 

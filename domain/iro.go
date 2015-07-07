@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"../ddd"
+	"github.com/funnythingz/iroiro-api/ddd"
 )
 
 type Iro struct {
