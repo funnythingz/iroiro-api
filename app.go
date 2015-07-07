@@ -25,12 +25,13 @@ func main() {
 
 	// Iroiro
 	m.Get("/v1/iroiro", iroiroHandler.Iroiro)
-	m.Post("/v1/iroiro", iroiroHandler.Create)
+	m.Post("/v1/iroiro", iroiroHandler.CreateIro)
 	m.Get(regexp.MustCompile(`^/v1/iroiro/(?P<id>\d+)$`), iroiroHandler.Iro)
+	m.Put(regexp.MustCompile(`^/v1/iroiro/(?P<id>\d+)$`), iroiroHandler.UpdateIro)
 
 	// Colors
 	m.Get("/v1/colors", colorsHandler.Colors)
-	m.Post("/v1/colors", colorsHandler.Create)
+	m.Post("/v1/colors", colorsHandler.CreateColor)
 	m.Get(regexp.MustCompile(`^/v1/colors/(?P<id>\d+)$`), colorsHandler.Color)
 
 	// Exception

@@ -1,7 +1,8 @@
-package iro
+package repositories
 
 import (
 	"github.com/funnythingz/iroiro-api/domain"
+	"github.com/funnythingz/iroiro-api/factories"
 	"github.com/funnythingz/iroiro-api/mapper"
 	_ "github.com/k0kubun/pp"
 )
@@ -18,15 +19,15 @@ func (r *IroRepository) Store(iro domain.Iro) domain.Iro {
 func (r *IroRepository) Resolve(id int) domain.Iro {
 	mi := mapper.Iro{}
 	mi.Fetch(id)
-	return factory.CreateIro(mi)
+	return factories.IroFact.CreateIro(mi)
 }
 
 func (r *IroRepository) ResolveList(permit int, page int) []domain.Iro {
 	mii := mapper.IroIro{}
 	mii.Fetch(permit, page)
-	return factory.CreateIroIro(mii)
+	return factories.IroFact.CreateIroIro(mii)
 }
 
 var (
-	Repository = IroRepository{}
+	IroRepo = &IroRepository{}
 )

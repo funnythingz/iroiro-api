@@ -1,4 +1,4 @@
-package color
+package factories
 
 import (
 	"github.com/funnythingz/iroiro-api/ddd"
@@ -7,9 +7,9 @@ import (
 	_ "github.com/k0kubun/pp"
 )
 
-type Factory struct{}
+type ColorFactory struct{}
 
-func (f *Factory) CreateColor(mc mapper.Color) domain.Color {
+func (f *ColorFactory) CreateColor(mc mapper.Color) domain.Color {
 	return domain.Color{
 		Entity: ddd.Entity{
 			Id: mc.EntityMapper.Id,
@@ -20,7 +20,7 @@ func (f *Factory) CreateColor(mc mapper.Color) domain.Color {
 	}
 }
 
-func (f *Factory) CreateColorList(mcl mapper.ColorList) []domain.Color {
+func (f *ColorFactory) CreateColorList(mcl mapper.ColorList) []domain.Color {
 	colorList := []domain.Color{}
 	for _, mc := range mcl.ColorList {
 		colorList = append(colorList, f.CreateColor(mc))
@@ -29,5 +29,5 @@ func (f *Factory) CreateColorList(mcl mapper.ColorList) []domain.Color {
 }
 
 var (
-	factory = Factory{}
+	ColorFact = &ColorFactory{}
 )

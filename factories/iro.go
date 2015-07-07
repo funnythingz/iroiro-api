@@ -1,4 +1,4 @@
-package iro
+package factories
 
 import (
 	"github.com/funnythingz/iroiro-api/ddd"
@@ -7,9 +7,9 @@ import (
 	_ "github.com/k0kubun/pp"
 )
 
-type Factory struct{}
+type IroFactory struct{}
 
-func (f *Factory) CreateIro(mi mapper.Iro) domain.Iro {
+func (f *IroFactory) CreateIro(mi mapper.Iro) domain.Iro {
 	return domain.Iro{
 		Entity: ddd.Entity{
 			Id: mi.EntityMapper.Id,
@@ -28,7 +28,7 @@ func (f *Factory) CreateIro(mi mapper.Iro) domain.Iro {
 	}
 }
 
-func (f *Factory) CreateIroIro(mii mapper.IroIro) []domain.Iro {
+func (f *IroFactory) CreateIroIro(mii mapper.IroIro) []domain.Iro {
 	iroiro := []domain.Iro{}
 	for _, mi := range mii.IroIro {
 		iroiro = append(iroiro, f.CreateIro(mi))
@@ -37,5 +37,5 @@ func (f *Factory) CreateIroIro(mii mapper.IroIro) []domain.Iro {
 }
 
 var (
-	factory = Factory{}
+	IroFact = &IroFactory{}
 )

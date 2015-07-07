@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/funnythingz/iroiro-api/domain"
-	"github.com/funnythingz/iroiro-api/domain/color"
-	"github.com/funnythingz/iroiro-api/domain/service"
 	"github.com/funnythingz/iroiro-api/helper"
+	"github.com/funnythingz/iroiro-api/repositories"
+	"github.com/funnythingz/iroiro-api/services"
 	_ "github.com/k0kubun/pp"
 	"github.com/zenazn/goji/web"
 	"io"
@@ -35,7 +35,7 @@ func (h *ColorsHandler) Colors(c web.C, w http.ResponseWriter, r *http.Request) 
 		page, _ = strconv.Atoi(urlQuery["page"][0])
 	}
 
-	colors := color.Repository.FetchList(permit, page)
+	colors := repositories.ColorRepo.FetchList(permit, page)
 	response, _ := json.Marshal(colors)
 	io.WriteString(w, string(response))
 }
@@ -47,7 +47,7 @@ func (h *ColorsHandler) Color(c web.C, w http.ResponseWriter, r *http.Request) {
 	}
 
 	id, _ := strconv.Atoi(c.URLParams["id"])
-	color := color.Repository.Fetch(id)
+	color := repositories.ColorRepo.Fetch(id)
 	if color.Id == 0 {
 		helper.ResultMessageJSON(w, []string{fmt.Sprintf("Not Found: %d", id)})
 		return
@@ -56,7 +56,7 @@ func (h *ColorsHandler) Color(c web.C, w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, string(response))
 }
 
-func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) {
+func (h *ColorsHandler) CreateColor(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	if service.BeforeAuth(w, r) == false {
 		return
@@ -99,7 +99,7 @@ func (h *ColorsHandler) Create(c web.C, w http.ResponseWriter, r *http.Request) 
 		TextCode: textCode,
 	}
 
-	resultColor := color.Repository.Commit(cl)
+	resultColor := repositories.ColorRepo.Commit(cl)
 	response, _ := json.Marshal(resultColor)
 	io.WriteString(w, string(response))
 }
