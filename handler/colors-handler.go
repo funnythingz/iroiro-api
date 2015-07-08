@@ -93,13 +93,14 @@ func (h *ColorsHandler) CreateColor(c web.C, w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	cl := domain.Color{
+	// New
+	color := domain.Color{
 		Name:     name,
 		Code:     code,
 		TextCode: textCode,
 	}
 
-	resultColor := repositories.ColorRepo.Commit(cl)
+	resultColor := repositories.ColorRepo.Commit(color)
 	response, _ := json.Marshal(resultColor)
 	io.WriteString(w, string(response))
 }
